@@ -24,7 +24,7 @@ useEffect(() => {
   const gatApiByName = async (input, page) => {
     try {
       setIsLoading(true);
-      setPictures([]);
+      // setPictures([]);
       const data = await getDataByName(input, page);
      setIsLoading(false);
     const arr = data.hits;
