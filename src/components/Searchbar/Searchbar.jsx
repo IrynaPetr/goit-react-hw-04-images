@@ -1,44 +1,42 @@
 import { HeaderSearchBar, FormSearchBar, BtnSearch, BtnLabel, Input } from "./Searchbar.styled";
-import React, { Component } from "react";
+import React, {useState } from "react";
 import searchIcon from '../../search_icon/searh_icon.png'
 
-export default class Searchbar extends Component {
-  state = {
-    input: '',
-  };
 
-  onChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
-  };
+const Searchbar = ({ onFind }) => {
+const [input, setInput] = useState('');
 
-  onSubmit = e => {
-    e.preventDefault();
-    if (!this.state.input.length) return;
-    this.props.onFind(this.state.input);
-  };
+const onChange = (e) => {
+  const { value } = e.target;
+  setInput(value);
+};
 
-
-  render() {
-    return (
-      <HeaderSearchBar>
-        <FormSearchBar onSubmit={this.onSubmit}>
-          <BtnSearch type="submit"
-          style={{ backgroundImage: `url(${searchIcon})` }}>
-            <BtnLabel>Search</BtnLabel>
-          </BtnSearch>
-          <Input
-          name="input"
-          type="text"
-          autocomplete="off"
-          autoFocus
-      placeholder="Search images and photos"
-          value={this.state.input}
-          onChange={this.onChange}/>
-        </FormSearchBar>
-      </HeaderSearchBar>
-    )
-  }
+const onSubmit = (e) => {
+  e.preventDefault();
+      if (input.length === 0) return;
+      onFind(input);
 }
+
+return (
+    <HeaderSearchBar>
+      <FormSearchBar onSubmit={onSubmit}>
+        <BtnSearch type="submit"
+        style={{ backgroundImage: `url(${searchIcon})` }}>
+          <BtnLabel>Search</BtnLabel>
+        </BtnSearch>
+        <Input
+        name="input"
+        type="text"
+        autocomplete="off"
+        autoFocus
+    placeholder="Search images and photos"
+        value={input}
+        onChange={onChange}/>
+      </FormSearchBar>
+    </HeaderSearchBar>
+  )
+}
+
+export default Searchbar;
+
+
